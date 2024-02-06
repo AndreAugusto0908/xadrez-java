@@ -1,7 +1,12 @@
 package application;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
+
+import chess.ChessMatch;
 import chess.ChessPiece;
 import chess.ChessPosition;
 import chess.Color;
@@ -46,6 +51,15 @@ public class UI {
         }
     }
 
+    public static void printMatch(ChessMatch chessMatch, List<ChessPiece> captured) {
+        printBoard(chessMatch.pieces());
+        System.out.println();
+        printCapturedPieces(captured);
+        System.out.println();
+        System.out.println("Turn: " + chessMatch.getTurn());
+        System.out.println("Waiting player: " + chessMatch.getCurrentPlayer());
+    }
+
     public static void printBoard(ChessPiece[][] pieces) {
         for (int i = 0; i < pieces.length; i++) {
             System.out.print((8 - i) + " ");
@@ -69,20 +83,44 @@ public class UI {
     }
 
     private static void printPiece(ChessPiece piece, boolean background) {
-		if (background) {
-			System.out.print(ANSI_BLUE_BACKGROUND);
-		}
-    	if (piece == null) {
-            System.out.print("-" + ANSI_RESET);
+        if (background) {
+            System.out.print(ANSI_BLUE_BACKGROUND);
         }
-        else {
+        if (piece == null) {
+            System.out.print("-" + ANSI_RESET);
+        } else {
             if (piece.getColor() == Color.WHITE) {
                 System.out.print(ANSI_WHITE + piece + ANSI_RESET);
-            }
-            else {
+            } else {
                 System.out.print(ANSI_YELLOW + piece + ANSI_RESET);
             }
         }
         System.out.print(" ");
-	}
+    }
+
+    private static void printCapturedPieces(List<ChessPiece> captured) {
+        List<ChessPiece> white = new ArrayList<>();
+        for (ChessPiece piece : captured) {
+            if (piece.getColor() == Color.WHITE) {
+                white.add(piece);
+            }
+        }
+
+        List<ChessPiece> black = new ArrayList<>();
+        for (ChessPiece piece : captured) {
+            if (piece.getColor() == Color.BLACK) {
+                black.add(piece);
+            }
+        }
+
+        System.out.println("Captured pieces:");
+        System.out.println("White: ");
+        System.out.println(ANSI_WHITE);
+        System.out.println(Arrays.toString(white.toArray()));
+        System.out.println(ANSI_RESET);
+        System.out.println("Black: ");
+        System.out.println(ANSI_YELLOW);
+        System.out.println(Arrays.toString(black.toArray()));
+        System.out.println(ANSI_RESET);
+    }
 }
