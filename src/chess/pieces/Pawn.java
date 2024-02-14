@@ -10,12 +10,13 @@ public class Pawn extends ChessPiece{
 
     private ChessMatch chessMatch;
 
-    public Pawn(Board board, Color color) {
-        super(board, color);
-    }
+    public Pawn(Board board, Color color, ChessMatch chessMatch) {
+		super(board, color);
+		this.chessMatch = chessMatch;
+	}
 
     @Override
-	public boolean[][] possibleMovies() {
+    public boolean[][] possibleMovies() {
 		boolean[][] mat = new boolean[getBoard().getRows()][getBoard().getColumn()];
 		
 		Position p = new Position(0, 0);
@@ -39,9 +40,10 @@ public class Pawn extends ChessPiece{
 				mat[p.getRow()][p.getColumn()] = true;
 			}	
 			
+			// #specialmove en passant white
 			if (position.getRow() == 3) {
 				Position left = new Position(position.getRow(), position.getColumn() - 1);
-				if (getBoard().positionExists(left) && isThereOpponentPiece(left) && getBoard().piece(left) == chessMatch.getEnPassantVulnerable() ) {
+				if (getBoard().positionExists(left) && isThereOpponentPiece(left) && getBoard().piece(left) == chessMatch.getEnPassantVulnerable()) {
 					mat[left.getRow() - 1][left.getColumn()] = true;
 				}
 				Position right = new Position(position.getRow(), position.getColumn() + 1);
@@ -69,7 +71,7 @@ public class Pawn extends ChessPiece{
 				mat[p.getRow()][p.getColumn()] = true;
 			}
 			
-			// #specialmove en passant black
+
 			if (position.getRow() == 4) {
 				Position left = new Position(position.getRow(), position.getColumn() - 1);
 				if (getBoard().positionExists(left) && isThereOpponentPiece(left) && getBoard().piece(left) == chessMatch.getEnPassantVulnerable()) {
