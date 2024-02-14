@@ -11,11 +11,19 @@ public class Bishop extends ChessPiece {
 		super(board, color);
 	}
 
+	/**
+     * Returns a string representation of the Bishop.
+     * @return The string "B" representing the Bishop.
+     */
 	@Override
 	public String toString() {
 		return "B";
 	}
 
+	/**
+     * Returns a matrix representing the possible movements of the Bishop.
+     * @return A boolean matrix where true indicates a possible movement and false indicates an impossible movement.
+     */
 	@Override
 	public boolean[][] possibleMovies() {
 		boolean[][] mat = new boolean[getBoard().getRows()][getBoard().getColumn()];

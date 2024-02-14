@@ -10,26 +10,50 @@ public class King extends ChessPiece {
 
     private ChessMatch chessMatch;
 
+    /**
+     * Constructor for the King class.
+     * @param board The board where the King will be placed
+     * @param color The color of the King (Black or White)
+     * @param chessMatch The chess match where the King belongs
+     */
     public King(Board board, Color color, ChessMatch chessMatch) {
         super(board, color);
         this.chessMatch = chessMatch;
     }
 
+    /**
+     * Returns a string representation of the King.
+     * @return The string "K" representing the King.
+     */
     @Override
     public String toString() {
         return "K";
     }
 
+    /**
+     * Checks if the King can move to a specified position.
+     * @param position The position to be checked
+     * @return true if the King can move to the specified position, false otherwise
+     */
     private boolean canMove(Position position) {
         ChessPiece p = (ChessPiece) getBoard().piece(position);
         return p == null || p.getColor() != getColor();
     }
 
+    /**
+     * Tests if castling with a Rook is possible.
+     * @param position The position of the Rook to be tested for castling
+     * @return true if castling with the Rook at the specified position is possible, false otherwise
+     */
     private boolean testRookCastling(Position position) {
         ChessPiece p = (ChessPiece) getBoard().piece(position);
         return p != null && p instanceof Rook && p.getColor() == getColor() && p.getMoveCount() == 0;
     }
 
+    /**
+     * Returns a matrix representing the possible movements of the King.
+     * @return A boolean matrix where true indicates a possible movement and false indicates an impossible movement.
+     */
     @Override
     public boolean[][] possibleMovies() {
         boolean[][] mat = new boolean[getBoard().getRows()][getBoard().getColumn()];
